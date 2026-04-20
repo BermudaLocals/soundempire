@@ -1,0 +1,29 @@
+{
+  "name": "soundempire",
+  "version": "1.0.0",
+  "description": "99.99% AGI-Powered Record Label",
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build && cd ../server && npm run build",
+    "start": "cd server && npm start",
+    "db:migrate": "cd server && npm run db:migrate",
+    "db:seed": "cd server && npm run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "ai",
+    "agi",
+    "record-label",
+    "music",
+    "claude",
+    "suno",
+    "elevenlabs"
+  ],
+  "author": "Dollar Double Empire",
+  "license": "MIT"
+}
