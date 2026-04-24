@@ -1,0 +1,97 @@
+{
+  "albumTitle": "Digital Babylon",
+  "artist": "ITAL PHOENIX",
+  "concept": "A spiritual exodus from the algorithmic trap into conscious awakening. The album chronicles a soul's journey through modern Babylon (social media, materialism, digital oppression) toward righteous rebirth, blending ancient Rastafarian wisdom with Gen Z's search for authentic identity in a filtered world.",
+  "trackCount": 10,
+  "albumArtConcept": "A majestic phoenix constructed entirely from glitching digital pixels and ancient Rastafarian symbols, rising from a pile of shattered smartphones and broken chains. The bird's wings transition from corrupt digital static (bottom) to pure golden flames (top) against a deep black background. Subtle matrix-style code rains down but transforms into Ge'ez script and Amharic characters. The album title 'DIGITAL BABYLON' in distressed gold foil treatment. Ital Phoenix's name in clean sans-serif below. The #D4AF37 gold is the only color besides blacks, grays, and one accent of deep red fire.",
+  "commercialPositioning": {
+    "leadSingle": "Phoenix Rise (track 3) - drops 8 weeks before album, carries brand, spiritual awakening anthem, strong streaming and cultural moment potential",
+    "secondSingle": "Jah Algorithm (track 4) - drops 4 weeks before album, TikTok-ready, quotable, shows versatility, commercial crossover",
+    "thirdSingle": "No Filter Needed (track 8) - drops on album release day, most pop-accessible, targets broader audience and playlisting",
+    "radioCuts": [
+      "Phoenix Rise",
+      "No Filter Needed",
+      "Jah Algorithm",
+      "Gold in the Rubble"
+    ],
+    "tiktokHooks": [
+      "Jah Algorithm (divine algorithm hook)",
+      "No Filter Needed (self-love anthem)",
+      "Chains We Choose (commentary on phone addiction)"
+    ],
+    "syncLicensing": [
+      "Meditation Riddim (wellness brands, yoga studios, mindfulness apps)",
+      "Ancestral WiFi (documentaries, cultural programming)",
+      "Lion Territory (sports, empowerment campaigns, trailers)"
+    ],
+    "deepCuts": [
+      "Babylon Loading",
+      "Meditation Riddim",
+      "Ancestral WiFi",
+      "Zion Frequency"
+    ]
+  },
+  "releaseStrategy": "Lead single 'Phoenix Rise' drops in Week 1 with lyric video and spiritual visual aesthetic establishing brand mythology. Build 8-week campaign with behind-the-scenes content showing creation process, Rastafarian spiritual practices, and Gen Z consciousness themes. Week 5: Drop 'Jah Algorithm' with high-energy visual and TikTok challenge (#JahAlgorithmChallenge - users show their authentic selves vs filtered versions). Week 8: Album pre-order with instant gratification track 'Chains We Choose'. Week 9: Full album release 'DIGITAL BABYLON' on a Friday with 'No Filter Needed' as focus track and official music video. Suggested release window: Late September/Early October to capture fall introspection season and position for year-end lists. Vinyl and limited gold cassette for collectors. Partner with meditation apps and conscious lifestyle brands for cross-promotion.",
+  "tracks": [
+    {
+      "number": 1,
+      "title": "Babylon Loading",
+      "file": "album_digital_babylon_track01_babylon_loading.json",
+      "runtime": "2:48"
+    },
+    {
+      "number": 2,
+      "title": "Chains We Choose",
+      "file": "album_digital_babylon_track02_chains_we_choose.json",
+      "runtime": "3:36"
+    },
+    {
+      "number": 3,
+      "title": "Phoenix Rise",
+      "file": "album_digital_babylon_track03_phoenix_rise.json",
+      "runtime": "4:12"
+    },
+    {
+      "number": 4,
+      "title": "Jah Algorithm",
+      "file": "album_digital_babylon_track04_jah_algorithm.json",
+      "runtime": "3:18"
+    },
+    {
+      "number": 5,
+      "title": "Meditation Riddim",
+      "file": "album_digital_babylon_track05_meditation_riddim.json",
+      "runtime": "4:44"
+    },
+    {
+      "number": 6,
+      "title": "Gold in the rubble",
+      "file": "album_digital_babylon_track06_gold_in_the_rubble.json",
+      "runtime": "3:52"
+    },
+    {
+      "number": 7,
+      "title": "Ancestral WiFi",
+      "file": "album_digital_babylon_track07_ancestral_wifi.json",
+      "runtime": "4:08"
+    },
+    {
+      "number": 8,
+      "title": "No Filter Needed",
+      "file": "album_digital_babylon_track08_no_filter_needed.json",
+      "runtime": "3:28"
+    },
+    {
+      "number": 9,
+      "title": "Lion Territory",
+      "file": "album_digital_babylon_track09_lion_territory.json",
+      "runtime": "3:42"
+    },
+    {
+      "number": 10,
+      "title": "Zion Frequency (Outro)",
+      "file": "album_digital_babylon_track10_zion_frequency_outro.json",
+      "runtime": "5:16"
+    }
+  ]
+}
