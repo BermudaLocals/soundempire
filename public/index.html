@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>🎵 Sound Empire — AGI Record Label</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',sans-serif;background:#0a0a0f;color:#e8e0ff;min-height:100vh}
+    .nav{background:linear-gradient(135deg,#1a0a2e,#16213e);padding:18px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #4a1d96}
+    .logo{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-status{font-size:.8rem;color:#a855f7;background:#1a0a2e;border:1px solid #4a1d96;padding:4px 12px;border-radius:20px}
+    .hero{text-align:center;padding:60px 20px 40px;background:radial-gradient(ellipse at center,#1a0a2e 0%,#0a0a0f 70%)}
+    .hero h1{font-size:3rem;background:linear-gradient(135deg,#a855f7,#ec4899,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+    .hero p{color:#9ca3af;font-size:1.1rem;max-width:600px;margin:0 auto 32px}
+    .stats{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+    .stat{background:linear-gradient(135deg,#1a0a2e,#16213e);border:1px solid #4a1d96;border-radius:12px;padding:20px 32px;text-align:center;min-width:140px}
+    .stat-val{font-size:2rem;font-weight:700;color:#a855f7}
+    .stat-label{font-size:.8rem;color:#9ca3af;margin-top:4px}
+    .section{padding:32px;max-width:1200px;margin:0 auto}
+    .section-title{font-size:1.4rem;font-weight:700;color:#a855f7;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+    .card{background:linear-gradient(135deg,#16213e,#1a0a2e);border:1px solid #4a1d96;border-radius:12px;padding:20px;transition:.2s}
+    .card:hover{border-color:#a855f7;transform:translateY(-2px)}
+    .card-name{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+    .card-genre{font-size:.8rem;color:#a855f7;background:#2d1b4e;padding:2px 10px;border-radius:20px;display:inline-block;margin-bottom:8px}
+    .card-bio{font-size:.85rem;color:#9ca3af;line-height:1.5;max-height:60px;overflow:hidden}
+    .card-streams{font-size:.8rem;color:#6b7280;margin-top:10px}
+    .btn{padding:10px 22px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:600;transition:.2s}
+    .btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+    .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+    .btn-danger{background:transparent;color:#ef4444;border:1px solid #ef4444;font-size:.75rem;padding:5px 12px}
+    .form-group{margin-bottom:14px}
+    label{display:block;font-size:.85rem;color:#9ca3af;margin-bottom:5px}
+    input,select,textarea{width:100%;padding:10px 14px;background:#16213e;border:1px solid #4a1d96;border-radius:8px;color:#e8e0ff;font-size:.9rem;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:#a855f7}
+    textarea{resize:vertical;min-height:80px}
+    .panel{background:#0f0f1a;border:1px solid #2d1b4e;border-radius:12px;padding:24px;margin-bottom:24px}
+    .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:100;justify-content:center;align-items:center}
+    .modal.open{display:flex}
+    .modal-box{background:#16213e;border:1px solid #4a1d96;border-radius:16px;padding:32px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}
+    .modal-title{font-size:1.3rem;font-weight:700;color:#a855f7;margin-bottom:20px}
+    .loading{text-align:center;color:#a855f7;padding:20px;font-style:italic}
+    .tag{font-size:.75rem;padding:2px 8px;border-radius:12px;background:#2d1b4e;color:#a855f7;display:inline-block;margin:2px}
+    .toast{position:fixed;bottom:24px;right:24px;background:#7c3aed;color:#fff;padding:12px 20px;border-radius:8px;font-size:.9rem;z-index:200;display:none}
+    .toast.show{display:block;animation:fadeIn .3s}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="logo">🎵 Sound Empire</div>
+  <div class="nav-status" id="dbStatus">⚡ LOADING...</div>
+</nav>
+
+<div class="hero">
+  <h1>AGI-Powered Record Label</h1>
+  <p>Create artists, write platinum-quality songs, and generate viral marketing — all with AI.</p>
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-val" id="s-artists">—</div><div class="stat-label">Artists</div></div>
+    <div class="stat"><div class="stat-val" id="s-songs">—</div><div class="stat-label">Songs</div></div>
+    <div class="stat"><div class="stat-val" id="s-revenue">—</div><div class="stat-label">Revenue</div></div>
+    <div class="stat"><div class="stat-val" id="s-status">—</div><div class="stat-label">Status</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <!-- Artists -->
+  <div class="section-title">🎤 Artists <button class="btn btn-primary" style="margin-left:auto;font-size:.85rem;padding:7px 16px" onclick="openModal('createArtist')">+ New Artist</button></div>
+  <div class="grid" id="artistGrid"><div class="loading">Loading artists...</div></div>
+
+  <!-- Songs -->
+  <div class="section-title">🎵 Songs <button class="btn btn-primary" style="margin-left:auto;font-size:.85rem;padding:7px 16px" onclick="openModal('createSong')">+ New Song</button></div>
+  <div class="grid" id="songGrid"><div class="loading">Loading songs...</div></div>
+
+  <!-- Generate Tools -->
+  <div class="section-title">⚡ AI Studio</div>
+  <div class="panel">
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="openModal('viralAnalysis')">📊 Viral Analysis</button>
+      <button class="btn btn-primary" onclick="openModal('marketing')">📱 Marketing Copy</button>
+      <button class="btn btn-primary" onclick="openModal('pressRelease')">📰 Press Release</button>
+    </div>
+  </div>
+
+  <!-- AI Output -->
+  <div id="aiOutput" style="display:none" class="panel">
+    <div class="section-title">🤖 AI Output</div>
+    <pre id="aiText" style="white-space:pre-wrap;font-size:.85rem;color:#c4b5fd;line-height:1.6"></pre>
+  </div>
+</div>
+
+<!-- Create Artist Modal -->
+<div class="modal" id="modal-createArtist">
+  <div class="modal-box">
+    <div class="modal-title">🎤 Create New Artist</div>
+    <div class="form-group"><label>Genre</label><select id="ca-genre"><option>reggae</option><option>afrobeats</option><option>hip-hop</option><option>r&b</option><option>pop</option><option>dancehall</option><option>latin</option></select></div>
+    <div class="form-group"><label>Style Notes (optional)</label><textarea id="ca-notes" placeholder="e.g. 'conscious lyrics, roots vibes, like early Damian Marley'"></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary" onclick="createArtist()" id="ca-btn">✨ Generate Artist</button>
+      <button class="btn" style="background:#2d1b4e;color:#e8e0ff" onclick="closeModal('createArtist')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Song Modal -->
+<div class="modal" id="modal-createSong">
+  <div class="modal-box">
+    <div class="modal-title">🎵 Write New Song</div>
+    <div class="form-group"><label>Artist</label><select id="cs-artist"><option value="">Select artist...</option></select></div>
+    <div class="form-group"><label>Genre</label><select id="cs-genre"><option>reggae</option><option>afrobeats</option><option>hip-hop</option><option>r&b</option><option>pop</option></select></div>
+    <div class="form-group"><label>Theme</label><input id="cs-theme" placeholder="e.g. resilience, love, freedom, hustle..."></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary" onclick="createSong()" id="cs-btn">✨ Write Song</button>
+      <button class="btn" style="background:#2d1b4e;color:#e8e0ff" onclick="closeModal('createSong')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Viral Analysis Modal -->
+<div class="modal" id="modal-viralAnalysis">
+  <div class="modal-box">
+    <div class="modal-title">📊 Viral Analysis</div>
+    <div class="form-group"><label>Genre to Analyze</label><select id="va-genre"><option>reggae</option><option>afrobeats</option><option>hip-hop</option><option>r&b</option></select></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary" onclick="runViralAnalysis()" id="va-btn">🔍 Analyze</button>
+      <button class="btn" style="background:#2d1b4e;color:#e8e0ff" onclick="closeModal('viralAnalysis')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Marketing Modal -->
+<div class="modal" id="modal-marketing">
+  <div class="modal-box">
+    <div class="modal-title">📱 Marketing Copy</div>
+    <div class="form-group"><label>Song Title</label><input id="mk-title" placeholder="Song title..."></div>
+    <div class="form-group"><label>Artist Name</label><input id="mk-artist" placeholder="Artist name..."></div>
+    <div class="form-group"><label>Genre</label><input id="mk-genre" placeholder="Genre..."></div>
+    <div class="form-group"><label>Platform</label><select id="mk-platform"><option>instagram</option><option>tiktok</option><option>twitter</option><option>facebook</option></select></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary" onclick="genMarketing()" id="mk-btn">✨ Generate</button>
+      <button class="btn" style="background:#2d1b4e;color:#e8e0ff" onclick="closeModal('marketing')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Press Release Modal -->
+<div class="modal" id="modal-pressRelease">
+  <div class="modal-box">
+    <div class="modal-title">📰 Press Release</div>
+    <div class="form-group"><label>Artist</label><input id="pr-artist" placeholder="Artist name..."></div>
+    <div class="form-group"><label>Release Title</label><input id="pr-title" placeholder="Album or single title..."></div>
+    <div class="form-group"><label>Release Date</label><input id="pr-date" type="date"></div>
+    <div class="form-group"><label>Genre</label><input id="pr-genre" placeholder="Genre..."></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary" onclick="genPressRelease()" id="pr-btn">✨ Generate</button>
+      <button class="btn" style="background:#2d1b4e;color:#e8e0ff" onclick="closeModal('pressRelease')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = window.location.origin;
+
+async function api(method, path, body) {
+  const r = await fetch(API + path, { method, headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+  return r.json();
+}
+
+function toast(msg, ok = true) {
+  const t = document.getElementById('toast');
+  t.textContent = (ok ? '✅ ' : '❌ ') + msg;
+  t.style.background = ok ? '#7c3aed' : '#dc2626';
+  t.className = 'toast show';
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function openModal(id) { document.getElementById('modal-' + id).classList.add('open'); }
+function closeModal(id) { document.getElementById('modal-' + id).classList.remove('open'); }
+
+async function loadDashboard() {
+  const d = await api('GET', '/api/dashboard');
+  document.getElementById('s-artists').textContent = d.artists || 0;
+  document.getElementById('s-songs').textContent = d.songs || 0;
+  document.getElementById('s-revenue').textContent = '$' + (d.total_revenue || 0).toLocaleString();
+  document.getElementById('s-status').textContent = d.status || 'ACTIVE';
+  document.getElementById('dbStatus').textContent = '✅ ' + (d.label || 'Sound Empire');
+}
+
+async function loadArtists() {
+  const { artists } = await api('GET', '/api/artists');
+  const artistSelect = document.getElementById('cs-artist');
+  artistSelect.innerHTML = '<option value="">Select artist...</option>';
+  document.getElementById('artistGrid').innerHTML = (artists || []).map(a => `
+    <div class="card">
+      <div class="card-name">${a.name}</div>
+      <span class="card-genre">${a.genre}</span>
+      <p class="card-bio">${a.bio || '' }</p>
+      <div class="card-streams">🎧 ${(a.streams||0).toLocaleString()} streams · $${(a.revenue||0).toLocaleString()}</div>
+      <div style="margin-top:10px"><button class="btn btn-danger" onclick="deleteArtist('${a.id}')" >✕ Remove</button></div>
+    </div>`).join('') || '<p style="color:#6b7280">No artists yet — create one!</p>';
+  (artists || []).forEach(a => { const o = document.createElement('option'); o.value = a.id; o.textContent = a.name; artistSelect.appendChild(o); });
+}
+
+async function loadSongs() {
+  const { songs } = await api('GET', '/api/songs');
+  document.getElementById('songGrid').innerHTML = (songs || []).map(s => `
+    <div class="card">
+      <div class="card-name">${s.title}</div>
+      <span class="card-genre">${s.genre}</span>
+      <p style="font-size:.8rem;color:#9ca3af;margin-top:6px">by ${s.artist_name || 'Unknown'}</p>
+      <div style="margin-top:8px"><span class="tag">${s.status}</span></div>
+      <div class="card-streams">🎧 ${(s.streams||0).toLocaleString()} streams</div>
+      <div style="margin-top:10px"><button class="btn btn-danger" onclick="deleteSong('${s.id}')" >✕ Remove</button></div>
+    </div>`).join('') || '<p style="color:#6b7280">No songs yet — write one!</p>';
+}
+
+async function createArtist() {
+  const btn = document.getElementById('ca-btn');
+  btn.textContent = '⏳ Generating...';
+  btn.disabled = true;
+  const result = await api('POST', '/api/artists', { genre: document.getElementById('ca-genre').value, style_notes: document.getElementById('ca-notes').value });
+  btn.textContent = '✨ Generate Artist'; btn.disabled = false;
+  if (result.error) { toast(result.error, false); return; }
+  toast('Artist created: ' + result.name);
+  closeModal('createArtist');
+  loadArtists(); loadDashboard();
+}
+
+async function createSong() {
+  const btn = document.getElementById('cs-btn');
+  btn.textContent = '⏳ Writing...';
+  btn.disabled = true;
+  const result = await api('POST', '/api/songs', { artist_id: document.getElementById('cs-artist').value, genre: document.getElementById('cs-genre').value, theme: document.getElementById('cs-theme').value });
+  btn.textContent = '✨ Write Song'; btn.disabled = false;
+  if (result.error) { toast(result.error, false); return; }
+  toast('Song written: ' + result.title);
+  closeModal('createSong');
+  showAIOutput(result.lyrics || result.suno_prompt);
+  loadSongs(); loadDashboard();
+}
+
+async function runViralAnalysis() {
+  const btn = document.getElementById('va-btn');
+  btn.textContent = '⏳ Analyzing...';
+  btn.disabled = true;
+  const result = await api('POST', '/api/generate/viral-analysis', { genre: document.getElementById('va-genre').value });
+  btn.textContent = '🔍 Analyze'; btn.disabled = false;
+  closeModal('viralAnalysis');
+  showAIOutput(typeof result.analysis === 'string' ? result.analysis : JSON.stringify(result.analysis, null, 2));
+}
+
+async function genMarketing() {
+  const btn = document.getElementById('mk-btn');
+  btn.textContent = '⏳ Generating...'; btn.disabled = true;
+  const result = await api('POST', '/api/generate/marketing', { song_title: document.getElementById('mk-title').value, artist_name: document.getElementById('mk-artist').value, genre: document.getElementById('mk-genre').value, platform: document.getElementById('mk-platform').value });
+  btn.textContent = '✨ Generate'; btn.disabled = false;
+  closeModal('marketing');
+  showAIOutput(result.content);
+}
+
+async function genPressRelease() {
+  const btn = document.getElementById('pr-btn');
+  btn.textContent = '⏳ Writing...'; btn.disabled = true;
+  const result = await api('POST', '/api/generate/press-release', { artist_name: document.getElementById('pr-artist').value, release_title: document.getElementById('pr-title').value, release_date: document.getElementById('pr-date').value, genre: document.getElementById('pr-genre').value });
+  btn.textContent = '✨ Generate'; btn.disabled = false;
+  closeModal('pressRelease');
+  showAIOutput(result.press_release);
+}
+
+function showAIOutput(text) {
+  document.getElementById('aiOutput').style.display = 'block';
+  document.getElementById('aiText').textContent = text || 'No output';
+  document.getElementById('aiOutput').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function deleteArtist(id) {
+  if (!confirm('Delete this artist and all their songs?')) return;
+  await api('DELETE', '/api/artists/' + id);
+  toast('Artist removed');
+  loadArtists(); loadSongs(); loadDashboard();
+}
+
+async function deleteSong(id) {
+  if (!confirm('Delete this song?')) return;
+  await api('DELETE', '/api/songs/' + id);
+  toast('Song removed');
+  loadSongs(); loadDashboard();
+}
+
+// Boot
+loadDashboard(); loadArtists(); loadSongs();
+</script>
+</body>
+</html>
