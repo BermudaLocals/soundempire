@@ -15,6 +15,7 @@ import marketingRoutes from './routes/marketing.js';
 import analyticsRoutes from './routes/analytics.js';
 import voiceRoutes from './routes/voice.js';
 import videoRoutes from './routes/video.js';
+import viralRoutes from './routes/viral.js';
 import { startScheduler } from './services/scheduler.js';
 
 dotenv.config();
@@ -51,6 +52,7 @@ app.use('/api/marketing', marketingRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/voice', voiceRoutes);
 app.use('/api/video', videoRoutes);
+app.use('/api/viral', viralRoutes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

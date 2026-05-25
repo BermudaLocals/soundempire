@@ -4,6 +4,31 @@ import { generateSong, generateMusicVideoConcept } from '../services/claude.js';
 
 const router = Router();
 
+// ─── Caribbean Genre Context for Song Generation ────────────────────────────
+
+const CARIBBEAN_GENRE_CONTEXT = {
+  soca: {
+    lyrical_style: 'Party-forward, high-energy carnival lyrics. Use call-and-response hooks ("Put your hands up!", "Jump and wave!"). Celebrate Caribbean culture, feting, and good vibes. Lyrics should feel like a road march anthem.',
+    production_notes: 'Engine room rhythm section (iron/steel percussion), brass stabs, driving synth bass, soca kick pattern. High energy throughout with minimal drops in intensity. Add crowd chant sections.',
+    bpm_range: '140-165 BPM',
+    references: 'Machel Montano, Bunji Garlin, Voice, Kes, Nailah Blackman'
+  },
+  dancehall: {
+    lyrical_style: 'Jamaican patois/Creole lyrics. Blend boasting, romance, or social commentary. Use dancehall slang and catchphrases naturally. Riddim-ready: lyrics should work over multiple beats.',
+    production_notes: 'One-drop kick-snare dancehall riddim pattern, heavy 808 sub-bass, dancehall hi-hat rolls. Add airhorn and gunshot ad-libs. Bass must be physical and prominent. Consider singjay (singing + deejay) vocal approach.',
+    bpm_range: '90-110 BPM',
+    references: 'Vybz Kartel, Shenseea, Skeng, Sean Paul, Popcaan, Shabba Ranks'
+  },
+  reggae: {
+    lyrical_style: 'Conscious, spiritual, and uplifting themes. Messages of love, unity, resistance, and cultural pride. Lyrics should feel timeless and meaningful. Rastafarian influences welcome but not required.',
+    production_notes: 'One-drop drum pattern (kick on beat 3), offbeat skank guitar (the genre\'s signature), deep dub bassline, organ bubbling. Add dub FX: heavy reverb throws, tape delay on snare, echo on vocals. Production should feel warm and analog.',
+    bpm_range: '60-90 BPM',
+    references: 'Bob Marley, Chronixx, Protoje, Koffee, Damian Marley, Burning Spear'
+  }
+};
+
+const CARIBBEAN_GENRES = Object.keys(CARIBBEAN_GENRE_CONTEXT);
+
 // POST generate song (full, hook, or concept)
 router.post('/generate', async (req, res) => {
   try {
@@ -22,7 +47,22 @@ router.post('/generate', async (req, res) => {
     const artist = artistResult.rows[0];
     console.log(`Generating ${mode} song for ${artist.name}...`);
 
-    const songData = await generateSong({ mode, artist, vibe, lyricsTheme });
+    // Enrich with Caribbean genre context if applicable
+    const artistGenreKey = artist.genre?.toLowerCase().replace(/[\s-]+/g, '_');
+    let enrichedLyricsTheme = lyricsTheme || '';
+    if (CARIBBEAN_GENRES.includes(artistGenreKey)) {
+      const ctx = CARIBBEAN_GENRE_CONTEXT[artistGenreKey];
+      enrichedLyricsTheme = [
+        enrichedLyricsTheme,
+        `\n[GENRE CONTEXT — ${artistGenreKey.toUpperCase()}]`,
+        `Lyrical style: ${ctx.lyrical_style}`,
+        `Production: ${ctx.production_notes}`,
+        `BPM range: ${ctx.bpm_range}`,
+        `Reference artists: ${ctx.references}`
+      ].filter(Boolean).join('\n');
+    }
+
+    const songData = await generateSong({ mode, artist, vibe, lyricsTheme: enrichedLyricsTheme });
 
     // Save to database if requested
     let savedSong = null;

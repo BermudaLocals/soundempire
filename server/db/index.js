@@ -207,7 +207,21 @@ export async function setupDatabase() {
       created_at TIMESTAMP DEFAULT NOW()
     );
 
+    -- Viral DNA table
+    CREATE TABLE IF NOT EXISTS viral_dna (
+      id SERIAL PRIMARY KEY,
+      song_id UUID REFERENCES songs(id) ON DELETE SET NULL,
+      genre VARCHAR(50),
+      dna_pattern TEXT,
+      viral_score DECIMAL(5,2),
+      hook_potential DECIMAL(5,2),
+      rhythm_complexity DECIMAL(5,2),
+      created_at TIMESTAMP DEFAULT NOW()
+    );
+
     -- Create indexes
+    CREATE INDEX IF NOT EXISTS idx_viral_dna_genre ON viral_dna(genre);
+    CREATE INDEX IF NOT EXISTS idx_viral_dna_song ON viral_dna(song_id);
     CREATE INDEX IF NOT EXISTS idx_artists_status ON artists(status);
     CREATE INDEX IF NOT EXISTS idx_releases_artist ON releases(artist_id);
     CREATE INDEX IF NOT EXISTS idx_releases_date ON releases(release_date);
